@@ -6,20 +6,9 @@ cmake_policy(SET CMP0048 NEW)
 project(cxgnndl-cpp LANGUAGES CXX CUDA)
 
 
-if(${CMAKE_VERSION} VERSION_LESS_EQUAL "3.13.4")
-  cuda_select_nvcc_arch_flags(ARCH_FLAGS "Auto") # optional argument for arch to add
-  message("ARCH_FLAGS = ${ARCH_FLAGS}")
-  set(CMAKE_CUDA_ARCHITECTURES ${ARCH_FLAGS})
-else()
-  include(FindCUDA/select_compute_arch)
-  CUDA_DETECT_INSTALLED_GPUS(INSTALLED_GPU_CCS_1)
-  string(STRIP "${INSTALLED_GPU_CCS_1}" INSTALLED_GPU_CCS_2)
-  string(REPLACE " " ";" INSTALLED_GPU_CCS_3 "${INSTALLED_GPU_CCS_2}")
-  string(REPLACE "." "" CUDA_ARCH_LIST "${INSTALLED_GPU_CCS_3}")
-  message("ARCH_FLAGS = ${CUDA_ARCH_LIST}")
-  SET(CMAKE_CUDA_ARCHITECTURES ${CUDA_ARCH_LIST})
-  # set_property(GLOBAL PROPERTY CUDA_ARCHITECTURES "${CUDA_ARCH_LIST}")
-endif()
+set(CMAKE_CUDA_ARCHITECTURES 90)
+message("Setting CUDA Architecture to 90 (H100 NVL)")
+
 
 add_compile_definitions(_GLIBCXX_USE_CXX11_ABI=0) # necessary if using googletest and torch
 
