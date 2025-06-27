@@ -6,7 +6,7 @@ import numpy as np
 def load_full_graph_structure(name, undirected=True):
     basedir = ""
     if name in [
-            "arxiv", "products", "reddit", "papers100M", "mag240m", "wiki90m"
+            "arxiv", "products", "reddit", "papers100M", "mag240m", "wiki90m", "pubmed", "cora", "corafull"
     ] or "wiki" in name or "papers" in name or "arxiv" in name or "friendster" in name:
         basedir = "../../../../data/"
     elif name in ["rmag240m", "twitter", "friendster"]:
@@ -19,8 +19,10 @@ def load_full_graph_structure(name, undirected=True):
         prop = "directed"
     ptr = np.fromfile(f"{basedir}{name}/processed/csr_ptr_{prop}.dat",
                       dtype=np.int64)
+    #print(f"ptr.shape[0]: {ptr.shape[0]}")
     idx = np.fromfile(f"{basedir}{name}/processed/csr_idx_{prop}.dat",
                       dtype=np.int64)
+    #print(f"idx.shape[0]: {idx.shape[0]}")
     return ptr, idx
 
 
